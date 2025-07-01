@@ -1,38 +1,60 @@
 Loan Default Prediction API
 
+ 
+
+📑 Table of Contents
+
 Overview
 
-This repository contains a FastAPI service that predicts loan default probabilities using a pre-trained scikit-learn model. It also includes data extraction and model training scripts for reference and experimentation.
+Demo
 
 Repository Structure
 
-app.py: FastAPI application defining the /predict endpoint and model-loading logic (downloads model from Google Drive at startup).
-
-get_features.py: Helper module for feature processing (if applicable).
-
-script.py: Data loading, preprocessing, and model training script demonstrating logistic regression and random forest workflows.
-
-models/: Directory where the model file (best_model.joblib) is downloaded at runtime (not stored in Git).
-
-requirements.txt: List of Python dependencies.
-
-.gitignore: Specifies files and directories ignored by Git.
-
-README.md: Project overview, setup, and usage instructions.
-
 Setup
 
-Clone the repository
+Data Preparation & Model Training
+
+API Usage
+
+Example Request
+
+Deployment
+
+License
+
+🧐 Overview
+
+This repository hosts a FastAPI service that predicts loan default probabilities using a pre-trained machine learning model. The model is downloaded from Google Drive on startup to keep the GitHub repo lightweight.
+
+🎬 Demo
+
+Once running locally, view the interactive Swagger UI:🔗 http://127.0.0.1:8000/docs
+
+🗂 Repository Structure
+
+loan-default-api/
+├── app.py                # FastAPI application & model loader
+├── get_features.py       # Feature engineering helper (if used)
+├── script.py             # Data extraction, preprocessing, & model training
+├── requirements.txt      # Python dependencies
+└── .gitignore            # Ignored files/folders
+
+The models/ directory is created at runtime and not stored here.
+
+⚙️ Setup
+
+Clone the repo
 
 git clone https://github.com/dasegovi19/loan-default-api.git
 cd loan-default-api
 
-Activate your Python environment
-If using Conda:
+Activate your environment
+
+Conda:
 
 conda activate loan_env
 
-Or for a venv:
+venv:
 
 source venv/bin/activate
 
@@ -40,38 +62,32 @@ Install dependencies
 
 pip install -r requirements.txt
 
-Data Preparation & Model Training
+🛠 Data Preparation & Model Training
 
-The script.py file contains a complete example of:
+Use script.py to:
 
-Extracting Loan_default.csv from a ZIP archive.
+Extract Loan_default.csv from the ZIP archive
 
-Loading and preprocessing the data with pandas.
+Preprocess data with pandas
 
-Training and evaluating baseline models (Logistic Regression, Random Forest).
+Train & evaluate models (Logistic Regression, Random Forest)
 
-Saving the trained model to the models/ directory as best_model.joblib.
-
-To run the script and train models locally:
+Save the best model to models/best_model.joblib
 
 python script.py
 
-API Usage
+🚀 API Usage
 
-Start the FastAPI server
+Start the server
 
 uvicorn app:app --reload
 
-Interactive API docs
-Open your browser to:
-
+Explore & test via Swagger UI:
 http://127.0.0.1:8000/docs
 
-This Swagger UI lets you explore and test the /predict endpoint.
+💡 Example Request
 
-Example /predict Request
-
-JSON payload:
+Endpoint: POST /predictPayload:
 
 {
   "Age": 35,
@@ -94,27 +110,26 @@ JSON payload:
   "MaritalStatus_Single": 0,
   "HasMortgage_Yes": 1,
   "HasDependents_Yes": 0,
-  "LoanPurpose_Business": 0,
-  "LoanPurpose_Education": 0,
   "LoanPurpose_Home": 1,
-  "LoanPurpose_Other": 0,
-  "HasCoSigner_Yes": 0,
-  "FICO_Band_Low": 0,
-  "FICO_Band_Medium": 1,
-  "FICO_Band_High": 0,
-  "FICO_Band_VeryHigh": 0
+  "FICO_Band_Medium": 1
 }
 
-Sample response:
+Response:
 
-{
-  "default_probability": 0.1623
-}
+{ "default_probability": 0.1623 }
 
-Deployment
+☁️ Deployment
 
-To deploy this API in production, consider platforms like Render.com, Deta, or Hugging Face Spaces. Ensure that your chosen environment has network access to Google Drive to fetch the model or substitute with another storage solution (S3, Azure Blob, etc.).
+Recommend platforms:
 
-License
+Render.com: Auto-detects FastAPI
 
-This project is licensed under the MIT License. Feel free to use and modify it for your own portfolio or production needs.
+Deta: One-click deployment
+
+Hugging Face Spaces: Use Dockerfile or space.toml
+
+Ensure the deployment environment can fetch from Google Drive or switch to S3/Azure Blob as needed.
+
+📄 License
+
+This project is released under the MIT License.
